@@ -1,7 +1,3 @@
-
-
-# Deploy Netflix Clone on Cloud using Jenkins - DevSecOps Project
-
 DevSecOps-Project
 
 This repository contains a sample Netflix-style application that demonstrates the implementation of DevSecOps practices using Docker, Jenkins, SonarQube, Trivy, Kubernetes, Prometheus, Grafana, and ArgoCD.
@@ -33,16 +29,17 @@ git clone https://github.com/N4si/DevSecOps-Project.git
 
     Install Docker:
 
-bash
+```bash
 
 sudo apt-get install docker.io -y
 sudo usermod -aG docker $USER
 newgrp docker
 sudo chmod 777 /var/run/docker.sock
+```
 
     Build and run the Docker container for the app:
 
-bash
+```bash
 
 docker build -t netflix .
 docker run -d --name netflix -p 8081:80 netflix:latest
@@ -51,6 +48,7 @@ docker run -d --name netflix -p 8081:80 netflix:latest
 
     Sign up for an API key from TMDB.
     Build the Docker image again, this time using the API key:
+```
 
 bash
 
@@ -67,13 +65,14 @@ docker run -d --name sonar -p 9000:9000 sonarqube:lts-community
 
     Install Trivy for Docker image vulnerability scanning:
 
-bash
+```bash
 
 sudo apt-get install wget apt-transport-https gnupg lsb-release
 wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | sudo apt-key add -
 echo deb https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main | sudo tee /etc/apt/sources.list.d/trivy.list
 sudo apt-get update
 sudo apt-get install trivy
+```
 
     Scan Docker images with Trivy:
 
@@ -86,7 +85,7 @@ Phase 3: CI/CD Setup
 
     Install Jenkins and its dependencies:
 
-bash
+```bash
 
 sudo apt-get update
 sudo apt-get install fontconfig openjdk-17-jre
@@ -96,6 +95,7 @@ sudo apt-get update
 sudo apt-get install jenkins
 sudo systemctl start jenkins
 sudo systemctl enable jenkins
+```
 
     Access Jenkins at http://<your-server-ip>:8080.
 
@@ -109,7 +109,7 @@ sudo systemctl enable jenkins
 
 Add the following pipeline script in Jenkins:
 
-groovy
+```groovy
 
 pipeline {
     agent any
@@ -161,6 +161,7 @@ pipeline {
         stage('Deploy to Container') { steps { sh 'docker run -d --name netflix -p 8081:80 dockerhub-user/netflix:latest' } }
     }
 }
+```
 
 Phase 4: Monitoring
 1. Install Prometheus
